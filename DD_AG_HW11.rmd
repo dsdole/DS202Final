@@ -1,0 +1,12 @@
+---
+title: "HW11"
+author: "Dhruv Dole, Ahmed Gharib"
+output: html_document
+---
+```{r}
+# set up and imports
+library(tidyverse)
+```
+```{r}
+original_data <- read.csv()
+```
