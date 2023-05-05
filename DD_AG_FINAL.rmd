@@ -19,3 +19,23 @@ raw_data$isFirstChild <- as.factor(raw_data$isFirstChild)
 raw_data$TransportMeans <- as.factor(raw_data$TransportMeans)
 unique(raw_data$WklyStudyHours)
 ```
+
+```{r}
+head(raw_data)
+```
+# Erasing "X" from the dataset:
+```{r}
+library(dplyr)
+
+raw_data <- select(raw_data, -X)
+head(raw_data)
+```
+#Replacing empty space in the dataset with "N/A":
+```{r}
+raw_data <- raw_data %>%
+  mutate_all(~ na_if(.,"")) %>% # replace empty strings with NA values
+  mutate_all(~ ifelse(is.na(.), "N/A", .)) # replace NA values with "N/A"
+
+head(raw_data)
+```
+
