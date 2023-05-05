@@ -3,7 +3,7 @@
 2. Create distributions for each variable.
 3. Check if expectations match
 4. Find all problems and steps to correct
-5. Data cleaning
+5. Data cleaning Done: Getting rid of "X", Filling emtpy spaces with "N/A", Ordering.
 6. For each relevant variable provide one chart as visual summary 
 7. Document structure, variable, and findings of plots: Add labels, colors, legends, trend-lines
 9. Investigate relationships: scatters for numeric-numeric; side by side boxplot or faceted plots for numeric-categorical; barchart with faceting for categorical-categorical(mosiac)
