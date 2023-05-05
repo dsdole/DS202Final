@@ -7,3 +7,15 @@ author: "Dhruv Dole, Ahmed Gharib"
 library(tidyverse)
 raw_data <- read.csv("https://raw.githubusercontent.com/dsdole/DS202Final/main/data/Expanded_data_with_more_features.csv")
 ```
+```{r}
+raw_data
+raw_data$Gender <- as.factor(raw_data$Gender)
+raw_data$EthnicGroup <- as.factor(raw_data$EthnicGroup)
+raw_data$ParentEduc <- as.factor(raw_data$EthnicGroup)
+raw_data$LunchType <- as.factor(raw_data$LunchType)
+raw_data$TestPrep <- as.factor(raw_data$TestPrep)
+raw_data$ParentMaritalStatus <- as.factor(raw_data$ParentMaritalStatus)
+raw_data$isFirstChild <- as.factor(raw_data$isFirstChild)
+raw_data$TransportMeans <- as.factor(raw_data$TransportMeans)
+unique(raw_data$WklyStudyHours)
+```
