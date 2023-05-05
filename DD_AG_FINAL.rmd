@@ -1,0 +1,9 @@
+---
+title: "R Notebook"
+output: html_document
+author: "Dhruv Dole, Ahmed Gharib"
+---
+```{r}
+library(tidyverse)
+raw_data <- read.csv("https://raw.githubusercontent.com/dsdole/DS202Final/main/data/Expanded_data_with_more_features.csv")
+```
