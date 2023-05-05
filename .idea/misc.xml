@@ -21,6 +21,13 @@
             </RMarkdownRenderProfile>
           </value>
         </entry>
+        <entry key="vcs://DD_AG_FINAL.rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="vcs://" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
