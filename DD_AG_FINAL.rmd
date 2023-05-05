@@ -15,9 +15,11 @@ raw_data$ParentEduc <- as.factor(raw_data$EthnicGroup)
 raw_data$LunchType <- as.factor(raw_data$LunchType)
 raw_data$TestPrep <- as.factor(raw_data$TestPrep)
 raw_data$ParentMaritalStatus <- as.factor(raw_data$ParentMaritalStatus)
-raw_data$isFirstChild <- as.factor(raw_data$isFirstChild)
+
+# raw_data$isFirstChild <- as.factor(raw_data$isFirstChild)
 raw_data$TransportMeans <- as.factor(raw_data$TransportMeans)
 unique(raw_data$WklyStudyHours)
+raw_data$WklyStudyHours <- as.factor(raw_data$WklyStudyHours,ordered=TRUE,levels=c("< 5", "5 - 10", "> 10"))
 ```
 
 ```{r}
