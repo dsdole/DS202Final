@@ -3,32 +3,31 @@ title: "R Notebook"
 output: html_document
 author: "Dhruv Dole, Ahmed Gharib"
 ---
+# Is there a relationship between students' socioeconomic status and there academic test scores?
 ```{r}
 library(tidyverse)
 raw_data <- read.csv("https://raw.githubusercontent.com/dsdole/DS202Final/main/data/Expanded_data_with_more_features.csv")
 ```
+# Erasing "X" from the dataset:
 ```{r}
-raw_data
+raw_data <- select(raw_data, -X)
+head(raw_data)
+```
+```{r}
 raw_data$Gender <- as.factor(raw_data$Gender)
 raw_data$EthnicGroup <- as.factor(raw_data$EthnicGroup)
 raw_data$ParentEduc <- as.factor(raw_data$EthnicGroup)
 raw_data$LunchType <- as.factor(raw_data$LunchType)
 raw_data$TestPrep <- as.factor(raw_data$TestPrep)
 raw_data$ParentMaritalStatus <- as.factor(raw_data$ParentMaritalStatus)
-#raw_data$isFirstChild <- as.factor(raw_data$isFirstChild)
 raw_data$TransportMeans <- as.factor(raw_data$TransportMeans)
-unique(raw_data$WklyStudyHours)
-#raw_data$WklyStudyHours <- as.factor(raw_data$WklyStudyHours,ordered=TRUE,levels=c("< 5", "5 - 10", "> 10"))
-```
-# Erasing "X" from the dataset:
-```{r}
-library(dplyr)
 
-raw_data <- select(raw_data, -X)
-head(raw_data)
+#raw_data$isFirstChild <- as.factor(raw_data$isFirstChild)
 ```
+
 # Factoring WklyStudyHours
 ```{r}
+unique(raw_data$WklyStudyHours)
 raw_data$WklyStudyHours <- factor(raw_data$WklyStudyHours, ordered = TRUE,
                                   levels = c("< 5", "5 - 10", "> 10"))
 ```
@@ -37,9 +36,6 @@ raw_data$WklyStudyHours <- factor(raw_data$WklyStudyHours, ordered = TRUE,
 ```{r}
 cleanraw_data <- raw_data %>%
   mutate_all(~replace(., .=="", NA))
-```
-
-```{r}
 cleanraw_data %>%
   summarise_all(~mean(is.na(.)) * 100)
 ```
@@ -79,6 +75,7 @@ AvgScore <- rowMeans(cleanraw_data[, c("MathScore", "ReadingScore", "WritingScor
 ggplot(cleanraw_data, aes(x = AvgScore, fill = factor(WklyStudyHours))) +
   geom_histogram(binwidth = 2, position = "dodge") +
   scale_fill_manual(values = c("black", "blue", "red")) +
+  facet_wrap(~ WklyStudyHours) + # remove this line to remove facets
   labs(title = "Distribution of Average Scores by Weekly Study Hours",
        x = "Average Score",
        y = "Student Count",
@@ -86,5 +83,20 @@ ggplot(cleanraw_data, aes(x = AvgScore, fill = factor(WklyStudyHours))) +
   theme_minimal()
 
 ```
+# Mosiac Plot between Ethnic Group and Parent Marital Status
+```{r}
 
-
+library(ggmosaic)
+mosaic_examp <- ggplot(data = cleanraw_data) +
+  geom_mosaic(aes(x = product(EthnicGroup, ParentMaritalStatus), fill = EthnicGroup)) +
+  labs(y="Ethnic Group", x="Parent Marital Status", title = "Ethnic Group and Parent Marital Status")
+mosaic_examp
+```
+There is no relation between Ethnic Group and Parent Marital Status. This is because there is no change in the proportions from column to column or row to row. This means that we can use these as independent predictors for model building.
+```{r}
+ggplot(cleanraw_data, aes(x =MathScore, y = ReadingScore, color = EthnicGroup, shape = Gender)) +
+  geom_point(size = 3) +
+  facet_grid(Gender ~ EthnicGroup) +
+  labs(x = "Math Score", y = "Reading Score", color = "Ethnic Group", shape = "Gender") +
+  theme_bw()
+```

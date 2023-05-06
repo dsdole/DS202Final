@@ -21,5 +21,5 @@
 - boxplot
 - barplot - - Ahmed - Average score affected by students according to their Practicing sports status:
 - histogram - - Ahmed - Weekly study hours affection of Average scores
-- mosaic plot 
+- mosaic plot - Dhruv - EthnicGroup by ParentMaritalStatus
 - map plot.
