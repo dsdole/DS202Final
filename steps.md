@@ -19,7 +19,7 @@
 - line plot
 - time series plot
 - boxplot
-- barplot
-- histogram
-- mosaic plot
+- barplot - - Ahmed - Average score affected by students according to their Practicing sports status:
+- histogram - - Ahmed - Weekly study hours affection of Average scores
+- mosaic plot 
 - map plot.
