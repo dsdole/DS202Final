@@ -7,7 +7,6 @@ author: "Dhruv Dole, Ahmed Gharib"
 library(tidyverse)
 raw_data <- read.csv("https://raw.githubusercontent.com/dsdole/DS202Final/main/data/Expanded_data_with_more_features.csv")
 ```
-
 ```{r}
 raw_data
 raw_data$Gender <- as.factor(raw_data$Gender)
@@ -21,10 +20,6 @@ raw_data$TransportMeans <- as.factor(raw_data$TransportMeans)
 unique(raw_data$WklyStudyHours)
 #raw_data$WklyStudyHours <- as.factor(raw_data$WklyStudyHours,ordered=TRUE,levels=c("< 5", "5 - 10", "> 10"))
 ```
-
-```{r}
-head(raw_data)
-```
 # Erasing "X" from the dataset:
 ```{r}
 library(dplyr)
@@ -32,29 +27,64 @@ library(dplyr)
 raw_data <- select(raw_data, -X)
 head(raw_data)
 ```
-#Replacing empty space in the dataset with "N/A":
-```{r}
-raw_data <- raw_data %>%
-  mutate_all(~ na_if(.,"")) %>% # replace empty strings with NA values
-  mutate_all(~ ifelse(is.na(.), "N/A", .)) # replace NA values with "N/A"
-
-head(raw_data)
-```
-# Counting NULL values
-```{r}
-na_counts <- raw_data %>% 
-  summarise_all(~ mean(. == "N/A") * 100) # calculate percentage of "N/A" values
-
-na_counts
-```
+# Factoring WklyStudyHours
 ```{r}
 raw_data$WklyStudyHours <- factor(raw_data$WklyStudyHours, ordered = TRUE,
-                                   levels = c("< 5", "5 - 10", "> 10"))
+                                  levels = c("< 5", "5 - 10", "> 10"))
 ```
 
-#Visual of clean data
+# Filling empty space
 ```{r}
-cleanraw_data <- raw_data
+cleanraw_data <- raw_data %>%
+  mutate_all(~replace(., .=="", NA))
+```
+
+```{r}
+cleanraw_data %>%
+  summarise_all(~mean(is.na(.)) * 100)
+```
+
+
+# Visual of clean data
+```{r}
 head(cleanraw_data)
 ```
+
+# Correlation plots (Ahmed Gharib)
+## 1 - Average score affected by students according to their Practicing sports status:
+```{r}
+library(ggplot2)
+
+AvgScore <- rowMeans(cleanraw_data[, c("MathScore", "ReadingScore", "WritingScore")], na.rm = TRUE)
+
+
+ggplot(cleanraw_data, aes(x = PracticeSport, y = AvgScore, fill = Gender)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge", alpha = 0.8) +
+  scale_fill_manual(values = c("orange", "purple")) +
+  labs(x = "Practicing sports status", y = "Average Score", fill = "Gender") +
+  theme_bw()
+
+```
+As we can see above the Average overall scores affected by students who practice sports compared to those who do not, is not a huge difference. Very similar overall.
+
+## 2 - Weekly study hours affection of Average scores
+
+```{r}
+# Load required packages
+library(ggplot2)
+
+# Compute average score
+AvgScore <- rowMeans(cleanraw_data[, c("MathScore", "ReadingScore", "WritingScore")], na.rm = TRUE)
+
+ggplot(cleanraw_data, aes(x = AvgScore, fill = factor(WklyStudyHours))) +
+  geom_histogram(binwidth = 2, position = "dodge") +
+  scale_fill_manual(values = c("black", "blue", "red")) +
+  labs(title = "Distribution of Average Scores by Weekly Study Hours",
+       x = "Average Score",
+       y = "Student Count",
+       fill = "Weekly Study Hours") +
+  theme_minimal()
+
+```
+
 

@@ -6,6 +6,13 @@
   <component name="RMarkdownSettings">
     <option name="renderProfiles">
       <map>
+        <entry key="file://$USER_HOME$/Downloads/DD_AG_FINAL.rmd">
+          <value>
+            <RMarkdownRenderProfile>
+              <option name="outputDirectoryUrl" value="file://$USER_HOME$/Downloads" />
+            </RMarkdownRenderProfile>
+          </value>
+        </entry>
         <entry key="file://$PROJECT_DIR$/DD_AG_FINAL.rmd">
           <value>
             <RMarkdownRenderProfile>
@@ -16,7 +23,7 @@
         <entry key="file://$PROJECT_DIR$/DD_AG_HW11.rmd">
           <value>
             <RMarkdownRenderProfile>
-              <option name="lastOutput" value="/tmp/DD_AG_HW11-16.rmd/DD_AG_HW11.html" />
+              <option name="lastOutput" value="/tmp/DD_AG_HW11.rmd/DD_AG_HW11.html" />
               <option name="outputDirectoryUrl" value="file://$PROJECT_DIR$" />
             </RMarkdownRenderProfile>
           </value>
