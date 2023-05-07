@@ -16,7 +16,7 @@
 4. Analysis of results and conclusions
 5. 6 of the following:
 - scatter plot,
-- line plot
+- line plot - - Ahmed - Correlating Number of siblings to each individual scores
 - time series plot
 - boxplot
 - barplot - - Ahmed - Average score affected by students according to their Practicing sports status:
