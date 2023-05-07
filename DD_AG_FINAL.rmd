@@ -83,6 +83,31 @@ ggplot(cleanraw_data, aes(x = AvgScore, fill = factor(WklyStudyHours))) +
   theme_minimal()
 
 ```
+For the above histogram, gathering the distribution of weekly hours of study seeing how that affects the overall scores of the students. As seen students that study less than 5 hours a week, have a peak range around 60-75. Similarly, students who study for more than 10 hours, have around the same range peak. But less students. Seems like 5-10 hours of study weekly is the best amount of hours in order to get better scores for the more students in this data set.
+
+# 3 - Correlating Number of siblings to each individual scores (Lineplot)
+```{r}
+library(tidyr)
+
+# Create a new data frame with columns for NbrSiblings, MathScore, ReadingScore, and WritingScore
+scores_by_siblings <- cleanraw_data %>%
+  select(NrSiblings, MathScore, ReadingScore, WritingScore) %>%
+  na.omit()
+
+# Reshape the data to long format
+scores_by_siblings_long <- scores_by_siblings %>%
+  pivot_longer(cols = c("MathScore", "ReadingScore", "WritingScore"), names_to = "Subject", values_to = "Score")
+
+# Create a line plot with facets for each subject
+ggplot(scores_by_siblings_long, aes(x = NrSiblings, y = Score, group = Subject)) +
+  geom_line(aes(color = Subject)) +
+  labs(title = "Correlation between Number of Siblings and Test Scores",
+       x = "Number of Siblings",
+       y = "Test Score",
+       color = "Subject") +
+  facet_wrap(~ Subject, scales = "free_y") +
+  theme_minimal()
+```
 # Mosiac Plot between Ethnic Group and Parent Marital Status
 ```{r}
 
