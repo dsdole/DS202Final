@@ -15,7 +15,7 @@
 3. plots should have different colors and use facet functions
 4. Analysis of results and conclusions
 5. 6 of the following:
-- scatter plot,
+- scatter plot, - - Dhruv - Reading Scores and Math Scores
 - line plot - - Ahmed - Correlating Number of siblings to each individual scores
 - time series plot
 - boxplot
