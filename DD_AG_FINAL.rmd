@@ -64,7 +64,7 @@ ggplot(cleanraw_data, aes(x = PracticeSport, y = AvgScore, fill = Gender)) +
 ```
 
 
-As we can see above the Average overall scores affected by students who practice sports compared to those who do not, is not a huge difference. Very similar overall.
+As we can see above the Average overall scores affected by students who practice sports compared to those who do not, is not a huge difference. Very similar overall. However, it is not directly correlated.
 
 ## 2 - Weekly study hours affection of Average scores
 
