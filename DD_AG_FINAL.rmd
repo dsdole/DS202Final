@@ -69,6 +69,9 @@ ggplot(cleanraw_data, aes(x = PracticeSport, y = AvgScore, fill = Gender)) +
   theme_bw()
 
 ```
+
+
+
 As we can see above the Average overall scores affected by students who practice sports compared to those who do not, is not a huge difference. Very similar overall.
 
 
@@ -93,6 +96,9 @@ ggplot(cleanraw_data, aes(x = AvgScore, fill = factor(WklyStudyHours))) +
   theme_minimal()
 
 ```
+
+
+
 For the above histogram, gathering the distribution of weekly hours of study seeing how that affects the overall scores of the students. As seen students that study less than 5 hours a week, have a peak range around 60-75. Similarly, students who study for more than 10 hours, have around the same range peak. But less students. Seems like 5-10 hours of study weekly is the best amount of hours in order to get better scores for the more students in this data set.
 
 
@@ -123,6 +129,7 @@ ggplot(scores_by_siblings_long, aes(x = NrSiblings, y = Score, group = Subject))
 ```
 
 
+As seen above the number of siblings that each of the students have, has a decent amount of affection on the individual scores. It could also be seen that it happens to students that have 4 or more siblings, they do a little bit worse then the rest. However, there is not a direct correlation between number of siblings and the scores.
 
 
 ## 4(Dhruv) - Mosiac Plot between Ethnic Group and Parent Marital Status
