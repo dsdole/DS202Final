@@ -44,11 +44,17 @@ cleanraw_data %>%
 ```{r}
 head(cleanraw_data)
 ```
+
+
+
 # Initial Assumptions:
 We believe that there is a significant relationship between socioeconomic status and student test scores. Namely, We expect variables such as WklyStudyHours, ParentMaritalStatus, LunchType, and ParentEduc to all have a relationship with The three score variables.
 
 # Analysis:
-___
+
+
+
+
 ## 1(Ahmed) - Average score affected by students according to their Practicing sports status:
 ```{r}
 # library(ggplot2)
@@ -64,7 +70,10 @@ ggplot(cleanraw_data, aes(x = PracticeSport, y = AvgScore, fill = Gender)) +
 
 ```
 As we can see above the Average overall scores affected by students who practice sports compared to those who do not, is not a huge difference. Very similar overall.
-***
+
+
+
+
 ## 2(Ahmed) - Weekly study hours affection of Average scores
 ```{r}
 # Load required packages
@@ -85,7 +94,10 @@ ggplot(cleanraw_data, aes(x = AvgScore, fill = factor(WklyStudyHours))) +
 
 ```
 For the above histogram, gathering the distribution of weekly hours of study seeing how that affects the overall scores of the students. As seen students that study less than 5 hours a week, have a peak range around 60-75. Similarly, students who study for more than 10 hours, have around the same range peak. But less students. Seems like 5-10 hours of study weekly is the best amount of hours in order to get better scores for the more students in this data set.
-***
+
+
+
+
 ## 3(Ahmed) - Correlating Number of siblings to each individual scores (Lineplot)
 ```{r}
 # library(tidyr)
@@ -109,7 +121,10 @@ ggplot(scores_by_siblings_long, aes(x = NrSiblings, y = Score, group = Subject))
   facet_wrap(~Subject, scales = "free_y") +
   theme_minimal()
 ```
-***
+
+
+
+
 ## 4(Dhruv) - Mosiac Plot between Ethnic Group and Parent Marital Status
 ```{r}
 library(ggmosaic)
@@ -118,8 +133,14 @@ mosaic_examp <- ggplot(data = cleanraw_data) +
   labs(y = "Ethnic Group", x = "Parent Marital Status", title = "Ethnic Group and Parent Marital Status")
 mosaic_examp
 ```
+
+
+
 There is no relation between Ethnic Group and Parent Marital Status. This is because there is no change in the proportions from column to column or row to row. This means that we can use these as independent predictors for model building.
-***
+
+
+
+
 ## 5(Dhruv) - Scatter plot of MathScore vs ReadingScore, Grouped by EthnicGroup and Gender
 ```{r}
 ggplot(cleanraw_data, aes(x = MathScore, y = ReadingScore, color = EthnicGroup, shape = Gender)) +
@@ -128,8 +149,14 @@ ggplot(cleanraw_data, aes(x = MathScore, y = ReadingScore, color = EthnicGroup, 
   labs(x = "Math Score", y = "Reading Score", color = "Ethnic Group", shape = "Gender") +
   theme_bw()
 ```
+
+
+
 The above plot shows a distribution of scores which is highly consistent among all ethnic groups. That being said, groups A, B, and C show some lower outliers for female student. Males students have some lower outliers in groups B, C, and D.
-***
+
+
+
+
 ## 6(Dhruv) - Stacked Boxplot of Math Scores
 ```{r}
 ggplot(cleanraw_data, aes(x = TestPrep, y = MathScore, fill = Gender)) +
@@ -138,4 +165,7 @@ ggplot(cleanraw_data, aes(x = TestPrep, y = MathScore, fill = Gender)) +
   labs(x = "Group", y = "Value", fill = "Variable") +
   ggtitle("Score Ranges of males and females with varying test prep completion")
 ```
+
+
+
 The boxplots show that each group has nearly equivalent ranges, however those students which complete their test prep are shown to have a higher mean score. There are many outliers along the lower end of all the ranges, this is due to the fact that while most tests are graded 0-100, the average or "C" grade is usually in the 70's. This leaves a significant portion of the range below the mean.
