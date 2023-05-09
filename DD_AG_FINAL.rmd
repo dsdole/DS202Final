@@ -11,9 +11,7 @@ raw_data <- read.csv("https://raw.githubusercontent.com/dsdole/DS202Final/main/d
 # Erasing "X" from the dataset:
 ```{r}
 raw_data <- select(raw_data, -X)
-head(raw_data)
 ```
-
 ```{r}
 raw_data$Gender <- as.factor(raw_data$Gender)
 raw_data$EthnicGroup <- as.factor(raw_data$EthnicGroup)
@@ -36,7 +34,7 @@ raw_data$WklyStudyHours <- factor(raw_data$WklyStudyHours, ordered = TRUE,
 # Filling empty space
 ```{r}
 cleanraw_data <- raw_data %>%
-  mutate_all(~replace(., .=="", NA))
+  mutate_all(~replace(., . == "", NA))
 cleanraw_data %>%
   summarise_all(~mean(is.na(.)) * 100)
 ```
@@ -46,11 +44,14 @@ cleanraw_data %>%
 ```{r}
 head(cleanraw_data)
 ```
+# Initial Assumptions:
+We believe that there is a significant relationship between socioeconomic status and student test scores. Namely, We expect variables such as WklyStudyHours, ParentMaritalStatus, LunchType, and ParentEduc to all have a relationship with The three score variables.
 
-# Correlation plots (Ahmed Gharib)
-## 1 - Average score affected by students according to their Practicing sports status:
+# Analysis:
+___
+## 1(Ahmed) - Average score affected by students according to their Practicing sports status:
 ```{r}
-library(ggplot2)
+# library(ggplot2)
 
 AvgScore <- rowMeans(cleanraw_data[, c("MathScore", "ReadingScore", "WritingScore")], na.rm = TRUE)
 
@@ -62,15 +63,12 @@ ggplot(cleanraw_data, aes(x = PracticeSport, y = AvgScore, fill = Gender)) +
   theme_bw()
 
 ```
-
-
-As we can see above the Average overall scores affected by students who practice sports compared to those who do not, is not a huge difference. Very similar overall. However, it is not directly correlated.
-
-## 2 - Weekly study hours affection of Average scores
-
+As we can see above the Average overall scores affected by students who practice sports compared to those who do not, is not a huge difference. Very similar overall.
+***
+## 2(Ahmed) - Weekly study hours affection of Average scores
 ```{r}
 # Load required packages
-library(ggplot2)
+# library(ggplot2)
 
 # Compute average score
 AvgScore <- rowMeans(cleanraw_data[, c("MathScore", "ReadingScore", "WritingScore")], na.rm = TRUE)
@@ -78,7 +76,7 @@ AvgScore <- rowMeans(cleanraw_data[, c("MathScore", "ReadingScore", "WritingScor
 ggplot(cleanraw_data, aes(x = AvgScore, fill = factor(WklyStudyHours))) +
   geom_histogram(binwidth = 2, position = "dodge") +
   scale_fill_manual(values = c("black", "blue", "red")) +
-  facet_wrap(~ WklyStudyHours) + # remove this line to remove facets
+  facet_wrap(~WklyStudyHours) + # remove this line to remove facets
   labs(title = "Distribution of Average Scores by Weekly Study Hours",
        x = "Average Score",
        y = "Student Count",
@@ -86,13 +84,11 @@ ggplot(cleanraw_data, aes(x = AvgScore, fill = factor(WklyStudyHours))) +
   theme_minimal()
 
 ```
-
-
 For the above histogram, gathering the distribution of weekly hours of study seeing how that affects the overall scores of the students. As seen students that study less than 5 hours a week, have a peak range around 60-75. Similarly, students who study for more than 10 hours, have around the same range peak. But less students. Seems like 5-10 hours of study weekly is the best amount of hours in order to get better scores for the more students in this data set.
-
-# 3 - Correlating Number of siblings to each individual scores (Lineplot)
+***
+## 3(Ahmed) - Correlating Number of siblings to each individual scores (Lineplot)
 ```{r}
-library(tidyr)
+# library(tidyr)
 
 # Create a new data frame with columns for NbrSiblings, MathScore, ReadingScore, and WritingScore
 scores_by_siblings <- cleanraw_data %>%
@@ -110,29 +106,36 @@ ggplot(scores_by_siblings_long, aes(x = NrSiblings, y = Score, group = Subject))
        x = "Number of Siblings",
        y = "Test Score",
        color = "Subject") +
-  facet_wrap(~ Subject, scales = "free_y") +
+  facet_wrap(~Subject, scales = "free_y") +
   theme_minimal()
 ```
-
-
-As seen above the number of siblings that each of the students have, has a decent amount of affection on the individual scores. It could also be seen that it happens to students that have 4 or more siblings, they do a little bit worse then the rest. However, there is not a direct correlation between number of siblings and the scores. 
-
-# Mosiac Plot between Ethnic Group and Parent Marital Status
+***
+## 4(Dhruv) - Mosiac Plot between Ethnic Group and Parent Marital Status
 ```{r}
-
 library(ggmosaic)
 mosaic_examp <- ggplot(data = cleanraw_data) +
   geom_mosaic(aes(x = product(EthnicGroup, ParentMaritalStatus), fill = EthnicGroup)) +
-  labs(y="Ethnic Group", x="Parent Marital Status", title = "Ethnic Group and Parent Marital Status")
+  labs(y = "Ethnic Group", x = "Parent Marital Status", title = "Ethnic Group and Parent Marital Status")
 mosaic_examp
 ```
-
-
 There is no relation between Ethnic Group and Parent Marital Status. This is because there is no change in the proportions from column to column or row to row. This means that we can use these as independent predictors for model building.
+***
+## 5(Dhruv) - Scatter plot of MathScore vs ReadingScore, Grouped by EthnicGroup and Gender
 ```{r}
-ggplot(cleanraw_data, aes(x =MathScore, y = ReadingScore, color = EthnicGroup, shape = Gender)) +
+ggplot(cleanraw_data, aes(x = MathScore, y = ReadingScore, color = EthnicGroup, shape = Gender)) +
   geom_point(size = 3) +
   facet_grid(Gender ~ EthnicGroup) +
   labs(x = "Math Score", y = "Reading Score", color = "Ethnic Group", shape = "Gender") +
   theme_bw()
 ```
+The above plot shows a distribution of scores which is highly consistent among all ethnic groups. That being said, groups A, B, and C show some lower outliers for female student. Males students have some lower outliers in groups B, C, and D.
+***
+## 6(Dhruv) - Stacked Boxplot of Math Scores
+```{r}
+ggplot(cleanraw_data, aes(x = TestPrep, y = MathScore, fill = Gender)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("blue", "green", "red")) +
+  labs(x = "Group", y = "Value", fill = "Variable") +
+  ggtitle("Score Ranges of males and females with varying test prep completion")
+```
+The boxplots show that each group has nearly equivalent ranges, however those students which complete their test prep are shown to have a higher mean score. There are many outliers along the lower end of all the ranges, this is due to the fact that while most tests are graded 0-100, the average or "C" grade is usually in the 70's. This leaves a significant portion of the range below the mean.
